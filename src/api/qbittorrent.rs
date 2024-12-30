@@ -1,22 +1,23 @@
 use std::env;
 
 pub fn login(username: &str, password: &str) -> String {
-    let url = format!(
-        "http://{}:{}/api/v2/auth/login",
+    let referer = format!(
+        "http://{}:{}",
         env::var("GLUETUN_HOST").expect("Failed to read Gluetun host"),
         env::var("QBITTORRENT_PORT").expect("Failed to read qBittorrent port")
     );
+    let url = format!("{}/api/v2/auth/login", referer);
 
     let username = urlencoding::encode(username);
     let password = urlencoding::encode(password);
 
     let response = ureq::post(&url)
-        .set("Referer", url.split("/").nth(2).unwrap())
+        .set("Referer", &referer)
         .send_form(&[("username", &username), ("password", &password)])
         .expect("Failed to send login request");
 
     let header = response
-        .header("Set-Cookie")
+        .header("set-cookie")
         .expect("Failed to read cookie");
 
     let cookie = header.split(";").next().expect("Failed to read cookie");
