@@ -1,11 +1,10 @@
 use crate::api::{gluetun, qbittorrent};
-use local_ip_address::linux::local_ip;
 use log::info;
 use port_check::is_port_reachable_with_timeout;
 use std::{env, path::Path, thread::sleep, time::Duration};
 
 fn is_accessible(port: u64) -> bool {
-    let address = local_ip().expect("Failed to read local IP address");
+    let address = gluetun::get_public_ip();
     let url = format!("http://{}:{}", address, port);
 
     is_port_reachable_with_timeout(url, Duration::from_secs(5))

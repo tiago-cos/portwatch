@@ -17,3 +17,21 @@ pub fn get_forwarded_port() -> u64 {
         .as_u64()
         .expect("Failed to read port")
 }
+
+pub fn get_public_ip() -> String {
+    let url = format!(
+        "http://{}:{}/v1/publicip/ip",
+        env::var("GLUETUN_HOST").expect("Failed to read Gluetun host"),
+        env::var("GLUETUN_PORT").expect("Failed to read Gluetun port")
+    );
+
+    let response = ureq::get(&url)
+        .call()
+        .expect("Failed to send getPublicIp request");
+
+    let public_ip: Value = response.into_json().expect("Failed to read public IP");
+    public_ip["public_ip"]
+        .as_str()
+        .expect("Failed to read IP")
+        .to_string()
+}
