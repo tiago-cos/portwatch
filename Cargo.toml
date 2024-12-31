@@ -7,6 +7,7 @@ description = "A simple port health checker for gluetun forwarded ports in qbitt
 license = "GPL-3.0-only"
 
 [dependencies]
+base64 = "0.22.1"
 dotenv = "0.15.0"
 env_logger = "0.11.6"
 log = "0.4.22"

@@ -1,6 +1,8 @@
 use std::env;
 use ureq::serde_json::Value;
 
+use crate::utils::auth::AuthRequestExt;
+
 pub fn get_forwarded_port() -> u64 {
     let url = format!(
         "http://{}:{}/v1/openvpn/portforwarded",
@@ -9,6 +11,7 @@ pub fn get_forwarded_port() -> u64 {
     );
 
     let response = ureq::get(&url)
+        .env_auth()
         .call()
         .expect("Failed to send getForwardedPort request");
 
@@ -26,6 +29,7 @@ pub fn get_public_ip() -> String {
     );
 
     let response = ureq::get(&url)
+        .env_auth()
         .call()
         .expect("Failed to send getPublicIp request");
 
