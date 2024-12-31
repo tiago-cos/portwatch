@@ -8,9 +8,6 @@ pub fn login(username: &str, password: &str) -> String {
     );
     let url = format!("{}/api/v2/auth/login", referer);
 
-    let username = urlencoding::encode(username);
-    let password = urlencoding::encode(password);
-
     let response = ureq::post(&url)
         .set("Referer", &referer)
         .send_form(&[("username", &username), ("password", &password)])
