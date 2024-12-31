@@ -11,24 +11,18 @@ Every 5 minutes, this application queries the Gluetun control server API for the
 ## Docker Compose Example
 
 ```yaml
-version: '3.8'
-
 services:
-  qbittorrent-port-sync:
-    image: your_image_name
-    container_name: qbittorrent-port-sync
+  portwatch:
+    image: tsousa28/portwatch
+    container_name: portwatch
     environment:
       - QBITTORRENT_USERNAME=${QBITTORRENT_USERNAME}
       - QBITTORRENT_PASSWORD=${QBITTORRENT_PASSWORD}
-      - QBITTORRENT_PORT=${QBITTORRENT_PORT}
-      - GLUETUN_HOST=${GLUETUN_HOST}
-      - GLUETUN_PORT=${GLUETUN_PORT}
-      - GLUETUN_AUTH_TYPE=${GLUETUN_AUTH_TYPE}
-      - GLUETUN_API_USERNAME=${GLUETUN_API_USERNAME}
-      - GLUETUN_API_PASSWORD=${GLUETUN_API_PASSWORD}
-      - GLUETUN_API_KEY=${GLUETUN_API_KEY}
-      - RUST_LOG=${RUST_LOG}
     restart: unless-stopped
+    depends_on:
+      - qbittorrent
+    networks:
+      - proxy
 ```
 
 ## Docker Compose Environment Variables
