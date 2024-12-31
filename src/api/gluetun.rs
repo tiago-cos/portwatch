@@ -6,8 +6,8 @@ use crate::utils::auth::AuthRequestExt;
 pub fn get_forwarded_port() -> u64 {
     let url = format!(
         "http://{}:{}/v1/openvpn/portforwarded",
-        env::var("GLUETUN_HOST").expect("Failed to read Gluetun host"),
-        env::var("GLUETUN_PORT").expect("Failed to read Gluetun port")
+        env::var("GLUETUN_HOST").unwrap_or("gluetun".to_string()),
+        env::var("GLUETUN_PORT").unwrap_or("8000".to_string())
     );
 
     let response = ureq::get(&url)
@@ -24,8 +24,8 @@ pub fn get_forwarded_port() -> u64 {
 pub fn get_public_ip() -> String {
     let url = format!(
         "http://{}:{}/v1/publicip/ip",
-        env::var("GLUETUN_HOST").expect("Failed to read Gluetun host"),
-        env::var("GLUETUN_PORT").expect("Failed to read Gluetun port")
+        env::var("GLUETUN_HOST").unwrap_or("gluetun".to_string()),
+        env::var("GLUETUN_PORT").unwrap_or("8000".to_string())
     );
 
     let response = ureq::get(&url)

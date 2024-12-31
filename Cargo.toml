@@ -1,9 +1,9 @@
 [package]
-name = "portsmith"
+name = "portwatch"
 version = "0.1.0"
 edition = "2021"
 authors = ["tiago.costa.sousa@proton.me"]
-description = "A simple port health checker for gluetun forwarded ports in qbittorrent."
+description = "Simple Rust application that syncs qBittorrent's listening port with Gluetun's forwarded port and resets it if inaccessible."
 license = "GPL-3.0-only"
 
 [dependencies]
