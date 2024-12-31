@@ -5,7 +5,7 @@ use std::{env, path::Path, thread::sleep, time::Duration};
 
 fn is_accessible(port: u64) -> bool {
     let address = gluetun::get_public_ip();
-    let url = format!("http://{}:{}", address, port);
+    let url = format!("{}:{}", address, port);
 
     is_port_reachable_with_timeout(url, Duration::from_secs(5))
 }
